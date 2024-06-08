@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>edit caisse</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="assets/js/dashboard.js"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span>edit acte
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" th:action="@{save_acte(page=${current_page})}" th:method="post">
+                        <div class="form-group">
+                            <label >libelle</label>
+                            <input type="hidden" th:value="${acte.id}" name="id">
+                            <input type="text" class="form-control" placeholder="libelle" th:value="${acte.libelle}" name="libelle">
+                            <span class="text-danger" th:errors="${acte.libelle}"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label >prix de base </label>
+                            <input type="number" class="form-control" placeholder="prixDeBase" th:value="${acte.prixDeBase}" name="prixDeBase">
+                            <span class="text-danger" th:errors="${acte.prixDeBase}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label >type </label>
+                            <select class="form-control form-control-sm" name="categorieActe">
+                                <option th:each="p : ${category}"
+                                        th:text="${p}"
+                                        th:value="${p}"
+                                        th:selected="${p == acte.categorieActe ? 'selected' : null}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

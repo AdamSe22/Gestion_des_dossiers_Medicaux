@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>new patient</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="assets/js/dashboard.js"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span>new consultation
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" th:action="@{enrg}" th:method="post">
+                        <div class="form-group">
+                            <label >numero de dossier</label>
+                            <input type="date" class="form-control" placeholder="date consultation" th:value="${consultation.dateConsultation}" name="dateConsultation">
+                            <span class="text-danger" th:errors="${consultation.dateConsultation}"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label >dossier medical </label>
+                            <select class="form-control form-control-sm" name="dossierMedical">
+                                <option th:each="p : ${dossier_medical}"
+                                        th:text="${p.numeroDossier}"
+                                        th:value="${p.id}"
+                                        >
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label >type </label>
+                            <select class="form-control form-control-sm" name="typeConsultation">
+                                <option th:each="p : ${type_consultation}"
+                                        th:text="${p}"
+                                        th:value="${p}"
+                                        th:selected="${p == consultation.typeConsultation ? 'selected' : null}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-check form-check-flat form-check-primary">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input"> Remember me </label>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

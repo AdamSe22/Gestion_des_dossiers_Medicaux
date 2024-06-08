@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>edit dossier medical</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="assets/js/dashboard.js"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span>Edit dossier medical
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" th:action="@{edits(page=${current_page},status=${status})}" th:method="post">
+                        <div class="form-group">
+                            <label >numero de dossier</label>
+                            <input type="hidden" th:name="id" th:value="${dossier_medical.id}">
+                            <input type="text" class="form-control" placeholder="numeroDossier" th:value="${dossier_medical.numeroDossier}" name="numeroDossier">
+                            <span class="text-danger" th:errors="${dossier_medical.numeroDossier}"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <label >patient </label>
+                            <select class="form-control form-control-sm" name="patient">
+                                <option th:each="p : ${patient}"
+                                        th:text="${p.nom}+' '+${p.prenom}"
+                                        th:value="${p.id}"
+                                        th:selected="${p.id == dossier_medical.patient.id ? 'selected' : null}">
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label >status </label>
+                            <select class="form-control form-control-sm" name="statusPaiement" >
+                                <option th:each="s : ${statu}"
+                                        th:text="${s}"
+                                        th:value="${s}"
+                                        th:selected="${s == dossier_medical.statusPaiement ? 'selected' : null}">
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="form-check form-check-flat form-check-primary">
+                            <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input"> Remember me </label>
+                        </div>
+                        <button type="submit" class="btn btn-gradient-primary me-2">Submit</button>
+                        <button class="btn btn-light">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

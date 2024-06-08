@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>intervention</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="assets/js/dashboard.js"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span> intervenetion
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th> note de medcin </th>
+                                <th> prix  </th>
+                                <th> acte </th>
+                                <th> consultation </th>
+                                <th> action </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="p:${listFacture}">
+                                <td th:text="${p.noteMedcin}"></td>
+                                <td th:text="${p.prixPatient}"> </td>
+                                <td th:text="${p.acte.id}+'_'+${p.acte.libelle}"> </td>
+                                <td th:text="${p.consultation.id}+'_'+${p.consultation.typeConsultation}"> </td>
+                                <td><a style="font-size:.75em" class="btn btn-gradient-danger " onclick=" return confirm('voulez-vous le supprimer')"
+                                       th:href="@{deleteIntervention(id=${p.id},page=${page})}">supprimer</a>
+                                    <a style="font-size:.75em" class="btn btn-gradient-warning"
+                                       th:href="@{edit_intervention(id=${p.id},page=${page})}">modifier</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a th:href="@{new_intervention(page=${current_page})}" style="color: #6910bb;text-decoration: none"><span class="mdi mdi-plus-circle"></span>add new </a>
+
+                        <style>
+                            .buttonStyle {
+                                background-color: rgba(105, 16, 187, 0.68);
+                                border-color: #6910bb;
+                                color: #fff;
+                            }
+                            .buttonStyle2 {
+                                background-color: #6910bb;
+                                border-color: #6910bb;
+                                color: #fff;
+                            }
+                        </style>
+                        <ul class="btn-group nav nav-pills" role="group" aria-label="Basic example">
+                            <li th:each="p,status:${pages}">
+                                <a type="button" class="btn buttonStyle" th:text="${status.index}"
+                                   th:class="${status.index==current_page?'btn buttonStyle2':'btn buttonStyle'}"
+                                   th:href="@{facture(page=${status.index})}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

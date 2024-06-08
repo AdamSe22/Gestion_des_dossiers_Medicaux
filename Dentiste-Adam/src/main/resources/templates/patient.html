@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="Layout">
+<head>
+    <meta charset="UTF-8">
+    <title>patient</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.1/css/bootstrap.min.css">
+    <script src="assets/js/dashboard.js"></script>
+</head>
+<body>
+<div layout:fragment="content1">
+    <div class="content-wrapper">
+        <div class="page-header">
+            <h3 class="page-title">
+                <span class="page-title-icon bg-gradient-primary text-white me-2">
+                  <i class="mdi mdi-home"></i>
+                </span> Patient
+            </h3>
+            <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item active" aria-current="page">
+                        <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="col-12 grid-margin">
+            <div class="card">
+                <div class="card-body">
+                    <form method="get">
+                        <label class="text-black me-2">Seaching By :</label>
+                        <input type="text"  name="name">
+                        <button type="submit" class="btn btn-gradient-primary me-2">Search</button>
+                    </form>
+                    <br>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th> nom </th>
+                                <th> prenom </th>
+                                <th> dateNaissance </th>
+                                <th> mutuelle  </th>
+                                <th> groupSanguin </th>
+                                <th> action </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="p:${listPatient}">
+                                <td th:text="${p.getNom()}">
+                                </td>
+                                <td th:text="${p.getPrenom()}"> </td>
+                                <td th:text="${p.getDateNaissance()}">
+                                </td>
+                                <td th:text="${p.mutuelle}"> </td>
+                                <td><label th:text="${p.groupSanguin}" class="badge badge-gradient-success"></label>  </td>
+                                <td><a style="font-size:.75em" class="btn btn-gradient-danger " onclick=" return confirm('voulez-vous le supprimer')"
+                                th:href="@{patientDelete(id=${p.id},name=${name},page=${page})}">supprimer</a>
+                                    <a style="font-size:.75em" class="btn btn-gradient-warning"
+                                    th:href="@{editPatient(id=${p.id},page=${page},name=${name})}">modifier</a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <a th:href="@{newPatient}" style="color: #6910bb;text-decoration: none"><span class="mdi mdi-plus-circle"></span>add new </a>
+
+                        <style>
+                            .buttonStyle {
+                                background-color: rgba(105, 16, 187, 0.68);
+                                border-color: #6910bb;
+                                color: #fff;
+                            }
+                            .buttonStyle2 {
+                                background-color: #6910bb;
+                                border-color: #6910bb;
+                                color: #fff;
+                            }
+                        </style>
+                        <ul class="btn-group nav nav-pills" role="group" aria-label="Basic example">
+                            <li th:each="p,status:${pages}">
+                            <a type="button" class="btn buttonStyle" th:text="${status.index}"
+                            th:class="${status.index==current_page?'btn buttonStyle2':'btn buttonStyle'}"
+                            th:href="@{patient(page=${status.index})}"></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
